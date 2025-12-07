@@ -9,6 +9,7 @@ const createJestConfig = nextJest({
 const customJestConfig = {
   setupFilesAfterEnv: ['<rootDir>/jest.setup.js'],
   testEnvironment: 'jest-environment-jsdom',
+  testMatch: ['<rootDir>/__tests__/**/*.test.{ts,tsx}'],
   moduleNameMapper: {
     '^@/(.*)$': '<rootDir>/$1',
   },
@@ -17,20 +18,25 @@ const customJestConfig = {
     'lib/**/*.{js,jsx,ts,tsx}',
     'hooks/**/*.{js,jsx,ts,tsx}',
     'services/**/*.{js,jsx,ts,tsx}',
+    'app/actions/**/*.{js,jsx,ts,tsx}',
     '!**/*.d.ts',
     '!**/node_modules/**',
     '!**/.next/**',
-    '!**/app/**', // Exclude Next.js pages from coverage
-    '!**/contexts/**', // Exclude context (requires more complex setup)
-    '!**/components/FilterBar.tsx', // Legacy component, not used in new UI
-    '!**/components/TaskForm.tsx', // Legacy component, not used in new UI
+    '!**/app/page.tsx',
+    '!**/app/layout.tsx',
+    '!**/app/login/page.tsx',
+    '!**/app/register/page.tsx',
+    '!**/app/todos/page.tsx',
+    '!**/contexts/**',
+    '!**/components/ui/**', // Shadcn components are pre-tested
+    '!**/lib/utils.ts', // Simple utility, already tested
   ],
   coverageThreshold: {
     global: {
-      branches: 30,
-      functions: 45,
-      lines: 55,
-      statements: 55,
+      branches: 70,
+      functions: 70,
+      lines: 70,
+      statements: 70,
     },
   },
 }

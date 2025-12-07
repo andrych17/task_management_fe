@@ -177,10 +177,14 @@ describe('Authentication Actions', () => {
   });
 
   describe('logoutAction', () => {
-    it('should logout successfully', async () => {
+    it('should clear cookies and redirect', async () => {
+      const { redirect } = require('next/navigation');
       mockClearAuthCookies.mockResolvedValue();
+      (redirect as jest.Mock).mockImplementation(() => {
+        throw new Error('NEXT_REDIRECT');
+      });
 
-      await expect(logoutAction()).rejects.toThrow();
+      await expect(logoutAction()).rejects.toThrow('NEXT_REDIRECT');
       expect(mockClearAuthCookies).toHaveBeenCalled();
     });
   });

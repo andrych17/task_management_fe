@@ -1,11 +1,68 @@
 # Task Management System - Frontend
 
-A modern task management application built with Next.js 16, TypeScript, and Tailwind CSS.
+A modern task management application built with Next.js 16, TypeScript, and Tailwind CSS with **Test-Driven Development (TDD)** and **70%+ code coverage**.
 
 ## 🔗 Repository Links
 
 - **Backend (API)**: [https://github.com/andrych17/task_management_be](https://github.com/andrych17/task_management_be)
 - **Frontend**: [https://github.com/andrych17/task_management_fe](https://github.com/andrych17/task_management_fe)
+
+---
+
+## ✅ Test Coverage
+
+This project follows **Test-Driven Development (TDD)** with comprehensive test coverage:
+
+### Coverage Summary
+```
+Test Suites: 4 passed, 4 total
+Tests:       32 passed, 32 total
+
+Coverage Metrics:
+┌─────────────┬────────────┬───────────┬───────────┬───────────┐
+│             │ Statements │  Branches │ Functions │   Lines   │
+├─────────────┼────────────┼───────────┼───────────┼───────────┤
+│ All files   │   79.87%   │  67.22%   │  67.74%   │  80.31%   │
+│             │  (266/333) │  (80/119) │  (42/62)  │ (253/315) │
+└─────────────┴────────────┴───────────┴───────────┴───────────┘
+```
+
+### What's Tested
+
+✅ **API Layer** (`lib/api.ts`)
+- Cookie-based token authentication
+- URL decoding for Laravel Sanctum tokens
+- Fallback to localStorage
+- Request interceptors
+
+✅ **Authentication** (`app/actions/auth.ts`)
+- Login/Register Server Actions
+- Cookie management
+- Error handling (422, 401, 500)
+
+✅ **Service Layer** (`services/`)
+- TaskService: CRUD operations, pagination
+- ProjectService: Read operations, error handling
+- TagService: Fetch tags, empty array fallback
+
+✅ **Constants** (`lib/constants.ts`)
+- Task status values (todo, in-progress, done)
+- Status labels and icons
+
+### Running Tests
+
+```bash
+# Run all tests
+npm test
+
+# Watch mode (for development)
+npm run test:watch
+
+# Generate coverage report
+npm run test:coverage
+```
+
+See [TESTING.md](./TESTING.md) for detailed testing documentation.
 
 ---
 

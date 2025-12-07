@@ -1,0 +1,54 @@
+﻿      ≡ƒöù [TagService] Fetching tags from API
+
+      at Function.log [as getTags] (services/tagService.ts:8:15)
+
+    console.log
+      Γ£à [TagService] Fetched 2 tags
+
+      at Function.log [as getTags] (services/tagService.ts:21:15)
+
+    console.log
+      ≡ƒöù [TagService] Fetching tags from API
+
+      at Function.log [as getTags] (services/tagService.ts:8:15)
+
+    console.error
+      Γ¥î [TagService] Error fetching tags: undefined
+
+    [0m [90m 22 |[39m       [36mreturn[39m tags[33m;[39m
+     [90m 23 |[39m     } [36mcatch[39m (error[33m:[39m any) {
+    [31m[1m>[22m[39m[90m 24 |[39m       console[33m.[39merror([32m'Γ¥î [TagService] Error fetching 
+tags:'[39m[33m,[39m error[33m.[39mresponse[33m?[39m[33m.[39mdata)[33m;[39m
+     [90m    |[39m               [31m[1m^[22m[39m
+     [90m 25 |[39m       [36mreturn[39m [][33m;[39m
+     [90m 26 |[39m     }
+     [90m 27 |[39m   }[0m
+
+      at Function.error [as getTags] (services/tagService.ts:24:15)
+      at Object.<anonymous> (__tests__/services-complete.test.ts:171:22)
+
+    console.error
+      Γ¥î [TagService] Tags are not separate entities
+
+    [0m [90m 47 |[39m
+     [90m 48 |[39m   [36mstatic[39m [36masync[39m createTag(data[33m:[39m { name[33m:[39m string 
+})[33m:[39m [33mPromise[39m[33m<[39m[33mTag[39m[33m>[39m {
+    [31m[1m>[22m[39m[90m 49 |[39m     console[33m.[39merror([32m'Γ¥î [TagService] Tags are not separate 
+entities'[39m)[33m;[39m
+     [90m    |[39m             [31m[1m^[22m[39m
+     [90m 50 |[39m     [36mthrow[39m [36mnew[39m [33mError[39m([32m'Tags are managed through tasks, not as 
+separate entities.'[39m)[33m;[39m
+     [90m 51 |[39m   }
+     [90m 52 |[39m[0m
+
+      at Function.error [as createTag] (services/tagService.ts:49:13)
+      at Object.createTag (__tests__/services-complete.test.ts:180:31)
+
+PASS __tests__/auth-actions.test.ts
+PASS __tests__/constants.test.ts
+
+Test Suites: 4 passed, 4 total
+Tests:       32 passed, 32 total
+Snapshots:   0 total
+Time:        1.082 s
+Ran all test suites.

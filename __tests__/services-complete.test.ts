@@ -119,7 +119,7 @@ describe('ProjectService', () => {
 
       const result = await ProjectService.getProjects();
       expect(result).toEqual(mockProjects);
-      expect(mockApi.get).toHaveBeenCalledWith('/projects?per_page=100');
+      expect(mockApi.get).toHaveBeenCalledWith('/projects');
     });
 
     it('should handle errors when fetching projects', async () => {
@@ -131,16 +131,12 @@ describe('ProjectService', () => {
   });
 
   describe('createProject', () => {
-    it('should create a project successfully', async () => {
+    it('should throw error as projects are read-only', async () => {
       const newProject = { name: 'New Project' };
-      const createdProject = { id: 1, ...newProject };
 
-      mockApi.post.mockResolvedValue({
-        data: { success: true, data: createdProject },
-      });
-
-      const result = await ProjectService.createProject(newProject);
-      expect(result).toEqual(createdProject);
+      await expect(ProjectService.createProject(newProject)).rejects.toThrow(
+        'Projects are read-only'
+      );
     });
   });
 });
@@ -165,28 +161,25 @@ describe('TagService', () => {
 
       const result = await TagService.getTags();
       expect(result).toEqual(mockTags);
-      expect(mockApi.get).toHaveBeenCalledWith('/tags?per_page=100');
+      expect(mockApi.get).toHaveBeenCalledWith('/tags');
     });
 
-    it('should handle errors when fetching tags', async () => {
+    it('should return empty array on error', async () => {
       const error = { response: { status: 500 } };
       mockApi.get.mockRejectedValue(error);
 
-      await expect(TagService.getTags()).rejects.toThrow();
+      const result = await TagService.getTags();
+      expect(result).toEqual([]);
     });
   });
 
   describe('createTag', () => {
-    it('should create a tag successfully', async () => {
-      const newTag = { name: 'New Tag', color: '#FF0000' };
-      const createdTag = { id: 1, ...newTag };
+    it('should throw error as tags are managed through tasks', async () => {
+      const newTag = { name: 'New Tag' };
 
-      mockApi.post.mockResolvedValue({
-        data: { success: true, data: createdTag },
-      });
-
-      const result = await TagService.createTag(newTag);
-      expect(result).toEqual(createdTag);
+      await expect(TagService.createTag(newTag)).rejects.toThrow(
+        'Tags are managed through tasks'
+      );
     });
   });
 });

@@ -1,4 +1,4 @@
-import { TASK_STATUS, PRIORITY_LABELS } from '@/lib/constants';
+import { TASK_STATUS, TASK_STATUS_LABELS, TASK_STATUS_ICONS } from '@/lib/constants';
 
 describe('Constants', () => {
   describe('TASK_STATUS', () => {
@@ -15,17 +15,19 @@ describe('Constants', () => {
     });
   });
 
-  describe('PRIORITY_LABELS', () => {
-    it('should have correct priority labels', () => {
-      expect(PRIORITY_LABELS.low).toBe('Low');
-      expect(PRIORITY_LABELS.medium).toBe('Medium');
-      expect(PRIORITY_LABELS.high).toBe('High');
+  describe('TASK_STATUS_LABELS', () => {
+    it('should have correct status labels', () => {
+      expect(TASK_STATUS_LABELS['todo']).toBe('To Do');
+      expect(TASK_STATUS_LABELS['in-progress']).toBe('In Progress');
+      expect(TASK_STATUS_LABELS['done']).toBe('Done');
     });
+  });
 
-    it('should have all priority levels', () => {
-      expect(Object.keys(PRIORITY_LABELS)).toContain('low');
-      expect(Object.keys(PRIORITY_LABELS)).toContain('medium');
-      expect(Object.keys(PRIORITY_LABELS)).toContain('high');
+  describe('TASK_STATUS_ICONS', () => {
+    it('should have icons for all statuses', () => {
+      expect(TASK_STATUS_ICONS['todo']).toBe('📝');
+      expect(TASK_STATUS_ICONS['in-progress']).toBe('⚙️');
+      expect(TASK_STATUS_ICONS['done']).toBe('✅');
     });
   });
 });

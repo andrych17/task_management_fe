@@ -3,6 +3,13 @@ import api from '@/lib/api';
 // Mock axios
 jest.mock('axios', () => ({
   create: jest.fn(() => ({
+    defaults: {
+      baseURL: 'http://task_management.test/api',
+      headers: {
+        'Content-Type': 'application/json',
+        'Accept': 'application/json',
+      },
+    },
     interceptors: {
       request: { use: jest.fn(), eject: jest.fn() },
       response: { use: jest.fn(), eject: jest.fn() },
@@ -66,10 +73,12 @@ describe('API Client', () => {
 
   describe('API Configuration', () => {
     it('should be configured with base URL from environment', () => {
+      expect(api.defaults).toBeDefined();
       expect(api.defaults.baseURL).toBeDefined();
     });
 
     it('should have correct default headers', () => {
+      expect(api.defaults.headers).toBeDefined();
       expect(api.defaults.headers['Content-Type']).toBe('application/json');
       expect(api.defaults.headers['Accept']).toBe('application/json');
     });

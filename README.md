@@ -2,7 +2,11 @@
 
 A modern task management application built with Next.js 16, TypeScript, and Tailwind CSS.
 
----
+## 📞 Repository Links
+
+- **Frontend:** [https://github.com/andrych17/task_management_fe](https://github.com/andrych17/task_management_fe)
+- **Backend:** [https://github.com/andrych17/task_management_be](https://github.com/andrych17/task_management_be)
+
 
 ## 📁 Folder Structure
 
@@ -61,7 +65,7 @@ frontend/
 ## 🏗️ Design Patterns Used
 
 ### 1. **Service Layer Pattern**
-Separates API business logic from UI components for better maintainability and testability.
+Separates API business logic from UI components.
 
 ```typescript
 // services/taskService.ts
@@ -78,19 +82,13 @@ export class TaskService {
 }
 ```
 
-**Benefits:**
-- Centralized API calls
-- Easy to mock for testing
-- Single source of truth for data operations
-- Reusable across components
-
-### 2. **Server-Side Rendering (SSR) with Next.js App Router**
-Modern Next.js architecture with Server Components and Server Actions.
+### 2. **Server-Side Rendering (SSR)**
+Next.js App Router with Server Components and Server Actions.
 
 ```typescript
 // app/layout.tsx - Server Component
 export default async function RootLayout({ children }) {
-  const user = await getServerUser(); // Fetch on server
+  const user = await getServerUser();
   return <html><body><Header user={user} />{children}</body></html>;
 }
 
@@ -103,43 +101,24 @@ export async function loginAction(email: string, password: string) {
 }
 ```
 
-**Benefits:**
-- Faster initial page load (HTML pre-rendered on server)
-- Better SEO (search engines see full content)
-- Secure cookie-based authentication (httpOnly option)
-- Reduced JavaScript sent to client
-
 ### 3. **Middleware Pattern**
-Route protection at edge level before page rendering.
+Route protection at edge level.
 
 ```typescript
 // middleware.ts
 export function middleware(request: NextRequest) {
   const token = request.cookies.get('auth_token')?.value;
   
-  // Protect /todos route
   if (request.nextUrl.pathname.startsWith('/todos') && !token) {
     return NextResponse.redirect(new URL('/login', request.url));
-  }
-  
-  // Redirect authenticated users away from auth pages
-  if ((pathname === '/login' || pathname === '/register') && token) {
-    return NextResponse.redirect(new URL('/todos', request.url));
   }
 }
 ```
 
-**Benefits:**
-- Runs at edge (faster than server-side checks)
-- Automatic redirects before page load
-- Consistent protection across all routes
-- No flash of unauthorized content
-
-### 4. **Component Composition with shadcn/ui**
-Building complex UIs from small, reusable components.
+### 4. **Component Composition**
+Building UIs from reusable components (shadcn/ui + Radix UI).
 
 ```typescript
-// Composing Dialog with Button and Form
 <Dialog>
   <DialogTrigger asChild>
     <Button>Add Task</Button>
@@ -150,18 +129,11 @@ Building complex UIs from small, reusable components.
     </DialogHeader>
     <form onSubmit={handleSubmit}>
       <Input name="title" />
-      <Select name="status">...</Select>
       <Button type="submit">Save</Button>
     </form>
   </DialogContent>
 </Dialog>
 ```
-
-**Benefits:**
-- Highly reusable components
-- Consistent design system (shadcn/ui + Radix UI)
-- Accessible by default (ARIA attributes built-in)
-- Easy to customize with Tailwind CSS
 
 ---
 
@@ -322,120 +294,14 @@ Tests:       32 passed, 32 total
 Average Coverage: 73.78%
 ```
 
-### Coverage by Module
+### Coverage Files Generated
 
-| Module | Description | Coverage |
-|--------|-------------|----------|
-| **API Client** | Token authentication, cookie handling | 85% |
-| **Auth Actions** | Login, register, logout Server Actions | 90% |
-| **Services** | Task, Project, Tag CRUD operations | 82% |
-| **Constants** | Status values, labels, icons | 100% |
-
-### What's Tested
-
-✅ **API Layer (`lib/api.ts`)**
-- Cookie-based token authentication
-- URL decoding for Laravel Sanctum tokens (`%7C` → `|`)
-- Fallback to localStorage
-- Authorization header attachment
-- Request interceptors
-
-✅ **Authentication (`app/actions/auth.ts`)**
-- Login flow (success + validation errors)
-- Registration flow (success + duplicate email errors)
-- Logout and cookie clearing
-- Cookie management (`setAuthCookies`, `clearAuthCookies`)
-- Error handling (401, 422, 500 status codes)
-
-✅ **Service Layer (`services/`)**
-- **TaskService:** CRUD operations, paginated responses, error handling
-- **ProjectService:** Read operations, error handling, read-only enforcement
-- **TagService:** Fetch tags, empty array fallback on errors
-
-✅ **Constants (`lib/constants.ts`)**
-- Task status values (`'todo'`, `'in-progress'`, `'done'`)
-- Status labels (To Do, In Progress, Done)
-- Status icons (📝, ⚙️, ✅)
-
-### Test Coverage Details
-
-```bash
-# Run coverage to see detailed file-by-file breakdown
-npm run test:coverage
-
-# Coverage files generated:
+```
 coverage/
-├── lcov-report/index.html    # Interactive HTML report (open in browser)
-├── lcov.info                 # LCOV format (for CI/CD)
-├── coverage-final.json       # JSON format
-└── clover.xml                # XML format (for CI/CD)
+├── lcov-report/index.html    # Open in browser for detailed report
+├── lcov.info
+├── coverage-final.json
+└── clover.xml
 ```
 
-### Coverage Thresholds
 
-Project configured with **70% minimum coverage** in `jest.config.js`:
-
-```javascript
-coverageThreshold: {
-  global: {
-    branches: 70,
-    functions: 70,
-    lines: 70,
-    statements: 70,
-  },
-}
-```
-
-**Current Status:** ✅ **PASSING** (all metrics above or near 70%)
-
----
-
-## 🚀 Tech Stack
-
-| Category | Technology |
-|----------|-----------|
-| **Framework** | Next.js 16 (App Router) |
-| **Language** | TypeScript |
-| **Styling** | Tailwind CSS |
-| **UI Components** | shadcn/ui + Radix UI |
-| **HTTP Client** | Axios |
-| **Testing** | Jest + React Testing Library |
-| **Notifications** | Sonner |
-| **Icons** | Lucide React |
-| **Tables** | TanStack Table |
-
----
-
-## 📝 Key Features
-
-- ✅ Server-Side Rendering (SSR) with Next.js App Router
-- ✅ Cookie-based authentication (secure, httpOnly option)
-- ✅ Server Actions for mutations (login, register, logout)
-- ✅ Edge middleware for route protection
-- ✅ Task CRUD operations (Create, Read, Update, Delete)
-- ✅ Bulk delete with multi-selection
-- ✅ Multi-tag filtering with visual badges
-- ✅ Searchable project dropdown
-- ✅ Column sorting (created_at, due_date, status, etc.)
-- ✅ Form validation (client + server)
-- ✅ Toast notifications (Sonner)
-- ✅ Responsive design (mobile-first)
-- ✅ **79.87% test coverage** (TDD approach)
-
----
-
-## 📄 Additional Documentation
-
-- **[TESTING.md](./TESTING.md)** - Detailed testing documentation, TDD workflow, best practices
-
----
-
-## 📞 Repository Links
-
-- **Frontend:** [https://github.com/andrych17/task_management_fe](https://github.com/andrych17/task_management_fe)
-- **Backend:** [https://github.com/andrych17/task_management_be](https://github.com/andrych17/task_management_be)
-
----
-
-**Version:** 1.0.0  
-**Last Updated:** December 7, 2025
